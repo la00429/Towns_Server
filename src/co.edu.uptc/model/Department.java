@@ -5,15 +5,13 @@ import co.edu.uptc.structures.BinaryTree;
 import java.util.Comparator;
 
 public class Department {
-    private String name;
     private BinaryTree<Township> townships;
 
-    public Department(String name) {
-        this.name = name;
+    public Department() {
         this.townships = new BinaryTree<>(Comparator.comparing(Township::getName));
     }
 
-    public boolean addInhabitantInTown(String townshipName, Inhabitant inhabitant) {
+    public synchronized boolean addInhabitantInTown(String townshipName, Inhabitant inhabitant) {
         boolean added = false;
         if(searchTownship(townshipName) == null){
             Township township = new Township(townshipName.toUpperCase().replace(" ", ""));
@@ -25,15 +23,15 @@ public class Department {
         return added;
     }
 
-    public String calculateMostPopulus(){
-        return this.townships.preOrder().stream().max(Comparator.comparing(Township::calculateNumberInhabitants)).get().getName();
+    public synchronized String calculateMostPopulous(){
+        return this.townships.inOrder().stream().max(Comparator.comparing(Township::calculateNumberInhabitants)).get().getName();
     }
 
-    public Township searchTownship(String townshipName) {
+    public synchronized String calculateMinorPopulous(){
+        return this.townships.inOrder().stream().min(Comparator.comparing(Township::calculateNumberInhabitants)).get().getName();
+    }
+
+    public synchronized Township searchTownship(String townshipName) {
         return this.townships.searchData(new Township(townshipName.toUpperCase().replace(" ", "")));
-    }
-
-    public String getName() {
-        return name;
     }
 }

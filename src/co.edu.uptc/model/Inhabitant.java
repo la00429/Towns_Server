@@ -9,11 +9,11 @@ public class Inhabitant {
         this.name = name;
     }
 
-    public String getId() {
+    public synchronized String getId() {
         return id;
     }
 
-    public String getName() {
+    public synchronized String getName() {
         return name;
     }
 }

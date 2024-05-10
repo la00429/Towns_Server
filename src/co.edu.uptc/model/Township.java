@@ -14,7 +14,7 @@ public class Township {
         this.inhabitants = new AVLTree<>(Comparator.comparing(Inhabitant::getName));
     }
 
-    public boolean addInhabitant(Inhabitant inhabitant) {
+    public synchronized boolean addInhabitant(Inhabitant inhabitant) {
         boolean added = false;
         if(inhabitants.searchData(inhabitant) == null){
             added = inhabitants.insert(inhabitant);
@@ -22,15 +22,15 @@ public class Township {
         return added;
     }
 
-    public String getName() {
+    public synchronized String getName() {
         return name;
     }
 
-    public List <Inhabitant> getInhabitants() {
+    public synchronized List <Inhabitant> getInhabitants() {
         return this.inhabitants.inOrder();
     }
 
-    public int calculateNumberInhabitants() {
+    public synchronized int calculateNumberInhabitants() {
         return this.inhabitants.preOrder().size();
     }
 
